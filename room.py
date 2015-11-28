@@ -16,6 +16,17 @@ class room:
     self._inventory = []
     # Each room starts with no exits
     self._exits = {}
+    # Initializing the special function 
+    self._special = ()
+    
+  # setSpecial() stores the special function in this room
+  def setSpecial(self, function):
+    self._special = function
+    return
+  
+  # runSpecial() runs the stored special function  
+  def runSpecial(self):
+    self._special()  
   
   # setName() sets the name of the room
   def setName(self, name):
