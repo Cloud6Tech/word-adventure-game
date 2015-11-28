@@ -16,45 +16,62 @@ def getUserInput():
   
   # Prompt for input until input is valid
   while true:
-    userInput = requestString(promptMessage)
+    inputString = requestString(promptMessage)
       
-    # Immediately exit if the player clicks cancel
-    if userInput == None:
-      printNow("You suddenly burst into flames and die. Bye.")
+    # Immediately exit function if the player clicks cancel
+    if inputString == None:
       return
       
     # Otherwise, process input
     else:
-      # Capitalize input characters
-      userInput = userInput.upper()
-      
-      # Handle empty input with normal reprompt
-      if userInput == "":
+    
+      # Handle empty input with reprompt
+      if len(inputString) == 0:
         continue
       
-      # Check for valid directional inputs; allow full word or just one letter
-      elif userInput == "NORTH" or userInput == "N":
-        userInput = "N"
-      elif userInput == "SOUTH" or userInput == "S":
-        userInput = "S"
-      elif userInput == "EAST" or userInput == "E":
-        userInput = "E"
-      elif userInput == "WEST" or userInput == "W":
-        userInput = "W"
-        
-      # Check for valid "TAKE" input
-      elif len(userInput) > 5 and userInput[:5] == "TAKE ":
-        # This returns the taken item only; will have to check that item is valid for each room
-        userInput = userInput[5:]
-        
-      # Check for valid "HELP" input
-      elif userInput == "HELP" or userInput[0] == "H":
-        printNow("Nobody can help you now.")
+      # Capitalize input characters
+      inputString = inputString.upper()
       
-       # Handle invalid input with error-message reprompt
+      # Parse input string on spaces
+      command = str.split(inputString)[0]
+      args = inputString[len(command)+1:]
+      
+      # Check for valid "HELP" input; allow full word or just one letter
+      if command == "HELP" or command == "H":
+        command = "MENU"
+        args = "HELP"
+        
+      # Check for valid "EXIT" input; allow full word or just one letter
+      elif command == "EXIT" or command == "X":
+        command = "MENU"
+        args = "EXIT"        
+      
+      # Check for valid MOVE/LOOK + directional inputs; allow full word or just one letter
+      elif command == "MOVE" or command == "LOOK":
+        if args == "NORTH" or args == "N":
+          args = "N"
+        elif args == "SOUTH" or args == "S":
+          args = "S"
+        elif args == "EAST" or args == "E":
+          args = "E"
+        elif args == "WEST" or args == "W":
+          args = "W"
+        else: 
+          # Reprompt with error message
+          promptMessage = "I do not understand where you want to " + command.lower() + ".\n>"
+          continue
+        
+      # Check for valid TAKE/USE input
+      elif command == "TAKE" or command == "USE":
+        if len(args) == 0:
+          # Reprompt with error message if no item argument is given
+          promptMessage = "I do not know what you want to " + command.lower() + ".\n>"
+          continue
+        
+      # Handle other invalid input with error-message reprompt
       else:
         promptMessage = "I do not understand that.\n>"
         continue
         
-      # Return validated input string (or None if cancel was clicked)
-      return userInput
+      # Return validated input as list (or None if cancel was clicked)
+      return (command,args)
