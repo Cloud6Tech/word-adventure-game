@@ -4,6 +4,9 @@
 
 # The player class
 # members: name, inventory[], and stats{}
+
+from media import *
+
 class player:
   def __init__(self, name = 'unknown'):
     # Assign the name given to the player

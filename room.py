@@ -8,6 +8,9 @@
 # a description
 # an inventory of items
 # a list of exits
+
+from media import *
+
 class room:
   def __init__(self, name = '' , description = ''):
     self._name = name

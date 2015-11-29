@@ -3,6 +3,8 @@
 #  Lab 11/12: Text-based Game
 #  inputParser.py
 
+from media import *
+
 def testParser():
   userInput = ""
   
@@ -15,7 +17,7 @@ def getUserInput():
   promptMessage = ">"
   
   # Prompt for input until input is valid
-  while true:
+  while (True):
     inputString = requestString(promptMessage)
       
     # Immediately exit function if the player clicks cancel
