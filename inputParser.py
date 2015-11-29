@@ -22,7 +22,7 @@ def getUserInput():
       
     # Immediately exit function if the player clicks cancel
     if inputString == None:
-      return
+      return ("MENU","EXIT")
       
     # Otherwise, process input
     else:
@@ -48,8 +48,8 @@ def getUserInput():
         command = "MENU"
         args = "EXIT"        
       
-      # Check for valid MOVE + directional inputs; allow full word or just one letter
-      elif command == "MOVE":
+      # Check for valid MOVE/LOOK + directional inputs; allow full word or just one letter
+      elif command == "MOVE" or command ==  "LOOK":
         if args == "NORTH" or args == "N":
           args = "N"
         elif args == "SOUTH" or args == "S":
