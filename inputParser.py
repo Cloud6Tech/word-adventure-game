@@ -48,8 +48,8 @@ def getUserInput():
         command = "MENU"
         args = "EXIT"        
       
-      # Check for valid MOVE/LOOK + directional inputs; allow full word or just one letter
-      elif command == "MOVE" or command == "LOOK":
+      # Check for valid MOVE + directional inputs; allow full word or just one letter
+      elif command == "MOVE":
         if args == "NORTH" or args == "N":
           args = "N"
         elif args == "SOUTH" or args == "S":
@@ -63,8 +63,8 @@ def getUserInput():
           promptMessage = "I do not understand where you want to " + command.lower() + ".\n>"
           continue
         
-      # Check for valid TAKE/USE input
-      elif command == "TAKE" or command == "USE":
+      # Check for valid TAKE/INSPECT/USE input
+      elif command == "TAKE" or command == "USE" or command == "INSPECT":
         if len(args) == 0:
           # Reprompt with error message if no item argument is given
           promptMessage = "I do not know what you want to " + command.lower() + ".\n>"
