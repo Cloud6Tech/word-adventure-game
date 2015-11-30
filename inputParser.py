@@ -1,4 +1,4 @@
-#  Heather McCabe 
+#  Team Seven: Brett Hansen, Jason Lloyd, Matthew Mason, Heather McCabe
 #  CST 205
 #  Lab 11/12: Text-based Game
 #  inputParser.py
@@ -8,13 +8,13 @@ from media import *
 def testParser():
   userInput = ""
   
-  while userInput != None:
+  while userInput != ("MENU","EXIT"):
     userInput = getUserInput()
     printNow("Received input: " + str(userInput))
 
 def getUserInput():
 
-  promptMessage = ">"
+  promptMessage = "What do you do?\n>"
   
   # Prompt for input until input is valid
   while (True):
@@ -51,13 +51,13 @@ def getUserInput():
       # Check for valid MOVE/LOOK + directional inputs; allow full word or just one letter
       elif command == "MOVE" or command ==  "LOOK":
         if args == "NORTH" or args == "N":
-          args = "N"
+          args = "NORTH"
         elif args == "SOUTH" or args == "S":
-          args = "S"
+          args = "SOUTH"
         elif args == "EAST" or args == "E":
-          args = "E"
+          args = "EAST"
         elif args == "WEST" or args == "W":
-          args = "W"
+          args = "WEST"
         else: 
           # Reprompt with error message
           promptMessage = "I do not understand where you want to " + command.lower() + ".\n>"
