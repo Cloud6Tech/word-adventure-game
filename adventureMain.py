@@ -67,7 +67,6 @@ def mainFunc():
   roomMural.setExit("W", roomPuzzle)
   
   roomOldMan.setExit("S",roomPuzzle)
-  roomOldMan.addToInventory(itemKey)
   
   roomDevelopers.setExit("S", roomArmory)
   
@@ -99,6 +98,19 @@ def mainFunc():
       break
     elif (currRoom.getName() == roomTrap.getName()):
       break
+    elif (currRoom.getName() == roomOldMan.getName() and keyTaken == false):
+      printNow("The old man eyes you, expectantly waiting for the password.")
+      password = requestString("Enter the password:")
+      if (password.upper() == passwordKey):
+        printNow("The old man claps his hands with glee and gives you a key!")
+        keyTaken = true
+        prot.addToInventory(itemKey)
+        printNow("========================\n")
+        continue
+      else:
+        printNow("The old man looks at you angrily and screams 'WRONG!' He shoves you out of the room.")
+        currRoom = roomPuzzle
+        continue
     elif (currRoom.getName() == roomPuzzle.getName() and riddleSolved == false):
       riddleGuess = requestString("The sphynx speaks: 'It has a white light at the end of it and can be over in the blink of an eye. If you have seen our secret, you know it's value. What do I speak of?")
       if (riddleGuess.upper() == riddleSolution):
@@ -148,26 +160,18 @@ def mainFunc():
       printNow("========================\n")
       continue
     
-    #Deals with take interaction. Only valid with old man
+    # Handle TAKE command
     elif (cmd == "TAKE"):
-      if (currRoom.getName() == roomOldMan.getName()):
-        if (keyTaken == false):
-          printNow("The old man eyes you expectantly waiting for the password")
-          password = requestString("Enter the password")
-          if (password.upper() == passwordKey):
-            printNow("The old man claps his hands with glee and gives you the key!")
-            keyTaken = true
-            printNow("========================\n")
-            continue
-          else:
-            printNow("The old man looks at you angrily and screams 'WRONG!'")
-            continue
+      canTakeItem = currRoom.takeItem(args)
+      
+      if canTakeItem:
+        prot.addToInventory(item)
+        printNow("You take the " + args.lower() + ".")
       else:
-        printNow("I'm sorry, there's nothing for you to take")
-        printNow("========================\n")
-        continue
-            
- 
+        printNow("You can't take that.")
+      printNow("========================\n")
+      continue
+     
     #THIS CODE DEALS WITH THE KNIFE WHICH WE MAY BE CUTTING FROM THE GAME, DUE TO IT MAKING THE PUZZLE ROOM TOO BUSY
     #  if (currRoom.getName() == roomArmory.getName()):
     #    if (args == "KNIFE"):
@@ -215,4 +219,4 @@ def mainFunc():
   if (victoryFlag== true):
     printNow("Get fat upon the fruits of your labor!")
   else:
-    printNow("You are a disgrace to adventurers everywhere!\nThis dungeoun is saddened by your patheticness!")
+    printNow("You are a disgrace to adventurers everywhere!\nThis dungeon is saddened by your patheticness!")
