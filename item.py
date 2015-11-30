@@ -2,6 +2,8 @@
 # CST 205
 # Team 7: Cloud 6 Tech         
     
+from media import *
+	
 class item:
   def __init__(self, id, name = '', description = ''):
     self._id = id

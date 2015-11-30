@@ -74,7 +74,7 @@ class player:
   
   def searchInventory(self, item):
     for i in range(len(self._inventory)):
-      if self._inventory[i].id == item.id:
+      if self._inventory[i].getId() == item:
         return true
       else:
         return false
