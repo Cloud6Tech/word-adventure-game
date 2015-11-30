@@ -2,8 +2,8 @@
 # Team 7: Cloud 6 Tech
 # CST 205
 
-#setLibPath("D:\\Heather\\Documents\\School\\CSIT\\2015 Fall B - CST 205\\word-adventure-game")
-setLibPath("C:\\Users\\masonm\\CST205\\word_game\\word-adventure-game")
+setLibPath("D:\\Heather\\Documents\\School\\CSIT\\2015 Fall B - CST 205\\word-adventure-game")
+#setLibPath("C:\\Users\\masonm\\CST205\\word_game\\word-adventure-game")
 from inputParser import *
 from item import *
 from player import *
@@ -50,10 +50,13 @@ def mainFunc():
                    "the West, next to the fire, is a single table lined with assorted tools. Looking to North you notice yet another " + \
                    "door, meaning a continuation to the nightmare. To the South nothing immediately catches your eye, however, after a " + \
                    "second look you can't help but notice an elaborate painting of a lovely woman dancing under a pale moon's light.")
-  
-  roomKnife.setInspect("TABLE","At the end of the table you spot a long jagged dagger which could be useful in a dangerous situation. You take it.",prot.addToInventory(itemKnife))
+  def tableKnife():
+    if not prot.searchInventory(itemKnife.getId()):
+      prot.addToInventory(itemKnife)
+      roomKnife.removeInspect("TABLE")
+  roomKnife.setInspect("TABLE","At the end of the table you spot a long jagged dagger which could be useful in a dangerous situation. You take it.",tableKnife)
   def paintingDoor():
-      roomKnife.setExit("S", roomSecret)
+    roomKnife.setExit("S", roomSecret)
   roomKnife.setInspect("PAINTING","Upon closer examination you see that the painting is wavering ever so slightly. You step a bit closer " + \
                       " and feel a cool breeze and the smell of fresh air. You've found a door hidden behind the painting.",paintingDoor)
                     

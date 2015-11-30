@@ -76,8 +76,7 @@ class player:
     for i in range(len(self._inventory)):
       if self._inventory[i].getId() == item:
         return true
-      else:
-        return false
+    return false
     
   def removeFromInventory(self, item):
     for i in range(len(self._inventory)):

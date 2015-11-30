@@ -104,23 +104,25 @@ class room:
         del self._inventory[i]
   
   # setInspect() sets the description of an item that can be inspected
-  def setInspect(self,itemName,description,itemFunc=None,itemFuncArgs=None):
-    self._inspect[itemName] = [description, itemFunc, itemFuncArgs]
+  def setInspect(self,itemName,description,itemFunc=None):
+    self._inspect[itemName] = [description, itemFunc]
 
   # getInspect() returns the description of an item that can be inspected
   def getInspect(self,itemName):
     if itemName in self._inspect:
+      description = self._inspect[itemName][0]
       itemFunc = self._inspect[itemName][1]
-      itemFuncArgs = self._inspect[itemName][2]
       if itemFunc != None:
-        if itemFuncArgs != None:
-          itemFunc(itemFuncArgs)
-        else:
-          itemFunc()
-      return self._inspect[itemName][0]
+        itemFunc()
+      return description
     else:
       return "That is nothing of interest."
 
+  # removeInspect() removes an item that could be inspected
+  def removeInspect(self,itemName):
+    if itemName in self._inspect:
+      del self._inspect[itemName]
+  
   # setExit() adds an entry in _exits by it's direction
   # direction is a string, room should be another room object
   def setExit(self, direction, room):
