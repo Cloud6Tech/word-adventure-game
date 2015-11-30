@@ -15,6 +15,7 @@ class room:
   def __init__(self, name = '' , description = ''):
     self._name = name
     self._description = description
+    self._self = self
     # Each room starts without inspectable items
     self._inspect = {}
     # Each room starts without lookable directions
@@ -24,16 +25,26 @@ class room:
     # Each room starts with no exits
     self._exits = {}
     # Initializing the special function 
-    self._special = ()
+    self._special = None
+    # Initialize the special function flag
+    self._specialFlag = False
     
   # setSpecial() stores the special function in this room
   def setSpecial(self, function):
     self._special = function
+    self._specialFlag = True
     return
   
   # runSpecial() runs the stored special function  
   def runSpecial(self):
-    self._special()  
+    if self._specialFlag == True:
+      self._special()  
+  
+  def setSpecialFlag(self, bool):
+    self._specialFlag = bool
+    
+  def getSpecialFlag(self):
+    return self._specialFlag
   
   # setName() sets the name of the room
   def setName(self, name):
@@ -93,13 +104,20 @@ class room:
         del self._inventory[i]
   
   # setInspect() sets the description of an item that can be inspected
-  def setInspect(self,item,description):
-    self._inspect[item] = description
+  def setInspect(self,itemName,description,itemFunc=None,itemFuncArgs=None):
+    self._inspect[itemName] = [description, itemFunc, itemFuncArgs]
 
   # getInspect() returns the description of an item that can be inspected
-  def getInspect(self,item):
-    if item in self._inspect:
-      return self._inspect[item]
+  def getInspect(self,itemName):
+    if itemName in self._inspect:
+      itemFunc = self._inspect[itemName][1]
+      itemFuncArgs = self._inspect[itemName][2]
+      if itemFunc != None:
+        if itemFuncArgs != None:
+          itemFunc(itemFuncArgs)
+        else:
+          itemFunc()
+      return self._inspect[itemName][0]
     else:
       return "That is nothing of interest."
 
