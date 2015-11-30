@@ -1,8 +1,8 @@
-#adventureMain.py
+# adventureMain.py
 # Team 7: Cloud 6 Tech
 # CST 205
 
-setLibPath("C:\\Users\\Bretterbear\\Desktop\\workDir")
+setLibPath("D:\\Heather\\Documents\\School\\CSIT\\2015 Fall B - CST 205\\word-adventure-game")
 from inputParser import *
 from item import *
 from player import *
@@ -20,23 +20,34 @@ def mainFunc():
   #--- --- --- --- --- --- Instantiating Rooms --- --- --- --- --- ---
   # 1- Entry Room
   roomEntrance = room("Cave Entrance", "A rough hewn cave with a strong stone door at one end, and the entrance to your back")
+  
   # 2- Antechamber
   roomAnteChamber = room("Antechamber", "A massive room with finely cut sandstone slabs which adorn the walls, floor and vaulted ceilings") 
+  
   # 3- Armory
-  roomArmory = room("Armory", "This armory clearly used to be well stocked. Now it's a dusty husk with a table filled with junk and an odd painting on the wall")
+  roomArmory = room("Armory", "This armory clearly used to be well stocked. Now it's a dusty husk with a table filled with junk and an odd painting on the wall.")
+  roomArmory.setInspect("PAINTING","You've found a door hidden behind the painting. You can go North from this room now!")
+  
   # 4- Puzzle Room
   roomPuzzle = room("Sphynx Room", "This eerily lit green chamber has a large sphynx in it which eyes you warily")
+  
   # 5- Mural Room
-  roomMural = room("Mural Room", "This room is dominated by a massive mural depicting frolicking bunnies.\nSomething is scrawled across the face of it.\nMaybe you should look closer")
+  roomMural = room("Mural Room", "This room is dominated by a massive mural depicting frolicking bunnies.\nSomething is scrawled across the face of it.\nMaybe you should look closer.")
+  roomMural.setInspect("MURAL","You see the words 'the password is SHUT UP' scrawled across the mural.")
+  
   # 6- OldMan Room
   roomOldMan = room("Old Man Room", "In the center of this candlelit room is an old man who looks at you grumpily and hollers 'what's the password?!'")
+  
   # 7- Developer's Room
   roomDevelopers = room("Developer Shrine", "This room is dominated by statues with the label 'Glorious Builders' underneath")
+  roomDevelopers.setInspect("STATUES","There are 4 statues, each with chiseled features and comically oversized muscles. The names read:\nMatthew Mason - Spinner of Yarns and explorer of Russia\nHeather McCabe - Heroine of the Storm and leader of our company\nJason Lloyd - Slayer of Pythons and master of all things logistical\nBrett Hansen - He's pretty cool too I guess")
+  
   # 8- Victory Room
   roomVictory = room("Treasury", "You've made it! You've gotten the treasure and will live out your life with the finest meats and cheeses!")
+  
   # 9- Trap Room
   roomTrap = room("Darkness", "You fall into the darkness and are lost. You are likely eaten by a Grue")
-  
+   
   #--- --- --- --- --- --- Instantiating Exits & Items --- --- --- --- --- ---
   roomEntrance.setExit("N", roomAnteChamber)
   
@@ -122,29 +133,20 @@ def mainFunc():
         currRoom = nextRoom
         continue
     
-    #deals with look interactions
-    elif (cmd == "LOOK"):
-      if (currRoom.getName == roomArmory.getName and args == "N"):
-        printNow("You've found a door hidden behind the painting. You can go North from this room now!")
-        printNow("========================\n")
+    # Handle LOOK command
+    elif (cmd == "LOOK"):    
+      printNow(currRoom.getLook(args))
+      printNow("========================\n")
+      continue
+      
+    # Handle INSPECT command
+    elif (cmd == "INSPECT"):
+      if (currRoom.getName == roomArmory.getName and args == "PAINTING"):
         roomArmory.setExit("N", roomDevelopers)
-        continue
-      elif (currRoom.getName == roomMural.getName and args == "E"):
-        printNow("You see the words: 'the password is SHUT UP' scrawled across the mural")
-        printNow("========================\n")
-        continue
-      elif (currRoom.getName == roomDevelopers.getName and args == "N"):
-        printNow("There are 4 statues, each with chiseled features and comically oversized muscles. The names read:")
-        printNow("Matthew Mason - Spinner of Yarns and explorer of Russia")
-        printNow("Heather McCabe - Heroine of the Storm and leader of our company")
-        printNow("Jason Lloyd - Slayer of Pythons and master of all things logistical")
-        printNow("Brett Hansen - He's pretty cool too I guess")
-        printNow("========================\n")
-        continue
-      else:
-        printNow(currRoom.getDescription())
-        printNow("========================\n")
-        continue
+      
+      printNow(currRoom.getInspect(args))
+      printNow("========================\n")
+      continue
     
     #Deals with take interaction. Only valid with old man
     elif (cmd == "TAKE"):
