@@ -70,10 +70,11 @@ def mainFunc():
                    "what written from this distance. Perhaps you should take a closer look.")              
  
   # Password Room
-  roomPassword = room("Chamber of Whispers", "You finally reach an opening after what seemed to be an eternity travelling through a lightless tunnel. " + \
-                      "A soft glow radiates from the center of the room with no obvious cause as to where the source of the light is you slowly " + \
+  roomPassword = room("Chamber of Whispers", "You finally reach an opening after what seemed to be an eternity traveling through a lightless tunnel. " + \
+                      "A soft glow radiates from the center of the room with no obvious cause as to where the source of the light is. You slowly " + \
                       "and very cautiously approach. Once at the soft glow you are able to look at the rest of the room more clearly. " + \
-                      "All around the room you see the remains of what appears to be those that have come before for you. Nothing else stands out, perhaps you should inspect the light further")
+                      "All around the room you see the remains of what appears to be those that have come before for you. Nothing else stands out, " + \
+                      "so perhaps you should inspect the light further.")
                   
   # Victory Room
   roomVictory = room("Exit", "After placing the key in the lock, the door seems to have taken a hold of it on its own. It?s as if it has been " + \
@@ -132,16 +133,19 @@ def mainFunc():
   
   # Light in Chamber of Whispers; inspecting prompts the player to provide the password which will give player a key
   def password():
-    passwordGuess = requestString("You state the password aloud:")
-    if passwordGuess == "password1234":
-      #prot.addToInventory(itemKey)
-      printNow( "A key suddenly appears in your pocket.")
-      passwordFlag = true
-    else:
-      printNow ("Leave us and return when you know the password!")
+    printNow("Suddenly, hundreds of voices begin to talk all at the same time. Through the commotion you cannot make out what they are saying. " + \
+             "Just before it goes silent you hear a whisper: 'Give us the password to receive our treasure...'")
+    passwordGuess = requestString("State the password:")
+    if passwordGuess == None:
+      printNow(">> Unsure, you back away slowly.")
+    elif passwordGuess == "password1234":
       prot.addToInventory(itemKey)
-  roomPassword.setInspect("LIGHT", "Suddenly, hundreds of voices begin to talk all at the same time. Through the commotion you cannot make out what they are saying. " + \
-                         "Just before it goes silent you hear a whisper: 'Give us the password to receive our treasure..",password)  
+      printNow(">> You speak confidently: '" + passwordGuess + "'")
+      printNow( "A key suddenly appears in your pocket.")
+    else:
+      printNow(">> You speak confidently: '" + passwordGuess + "'")
+      printNow ("The voices shriek: 'Leave us and return when you know the password!'")
+  roomPassword.setInspect("LIGHT", "", password)  
   
   #--- --- --- --- --- --- Add Initial Exits --- --- --- --- --- ---
   roomEntrance.setExit("NORTH", roomChamber)
@@ -174,8 +178,7 @@ def mainFunc():
   printNow("Current Location: " + roomEntrance.getName())
   printNow(roomEntrance.getDescription())
  
-  
-  #global variable initialization
+ #global variable initialization
   victoryFlag = false #This flag will be flipped when player reaches victory room
   currRoom = roomEntrance #currRoom contains current location of player character
   
