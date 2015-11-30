@@ -73,6 +73,15 @@ class room:
   def printInventory(self):
     for i in self._inventory:
       printNow(i.description)
+    
+  # takeItem() removes an item identified by name from the inventory[]
+  # Returns true if item was found, false if not
+  def takeItem(self,itemName):
+    for item in self._inventory:
+      if item.getName().upper() == itemName:
+        self._inventory.remove(item)
+        return True
+    return False
   
   # removeFromInventory() removes an item from the inventory[]
   def removeFromInventory(self, item):
