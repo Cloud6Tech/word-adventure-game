@@ -232,14 +232,16 @@ def mainFunc():
         printNow("A Grue sneaks up from behind and eats you.")
         break
       elif (args == "HELP"):
-        printNow(lineSeparator)
-        printNow("Here is your command list:")
-        printNow("Move: Lets you move in the cardinal directions. Must be followed by north, south, east or west.\nUsage: move north")
-        printNow("Take: In some rooms you may take something. Use with an item name.\nUsage: take banana")
-        printNow("Use: will use an item in your inventory. must use with proper item name.\nUsage: use aardvark")
-        printNow("Exit: Give up and end your adventure prematurely.\nUsage: exit")
-        printNow("Help: will bring up this lovely menu.\nUsage: You really should know this one by now!")
-        printNow(lineSeparator)
+
+        printNow("\n# Commands:")
+        printNow("# MOVE: Lets you move in the cardinal directions. Must be followed by north, south, east or west. Usage: 'move <direction>'")
+        printNow("# INSPECT: Take a closer look at an item. Usage: 'inspect <item>'")
+        #printNow("# LOOK: Take a closer look in a direction. Usage: 'look <direction>'")
+        #printNow("# TAKE: Take an item into your inventory. Usage: 'take <item>'")
+        #printNow("# USE: Use an item in your inventory. Usage: 'use <item>'")
+        printNow("# EXIT: Give up and end your adventure prematurely. Usage: 'exit'")
+        #printNow("# HELP: Bring up this lovely menu. Usage: You really should know this one by now!")
+        printNow("\n")
 
     else:
       printNow("That's not a valid command.")
