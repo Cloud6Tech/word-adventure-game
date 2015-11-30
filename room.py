@@ -15,6 +15,10 @@ class room:
   def __init__(self, name = '' , description = ''):
     self._name = name
     self._description = description
+    # Each room starts without inspectable items
+    self._inspect = {}
+    # Each room starts without lookable directions
+    self._look = {}
     # Each item starts without any items
     self._inventory = []
     # Each room starts with no exits
@@ -49,6 +53,17 @@ class room:
   def getDescription(self):
     return self._description
   
+  # setLook() sets the description of a certain direction in the room
+  def setLook(self,direction,description):
+    self._look[direction] = description
+
+  # getLook() returns the description of a certain direction in the room
+  def getLook(self,direction):
+    if direction in self._look:
+      return self._look[direction]
+    else:
+      return "There is nothing of interest in that direction."
+
   # addToInventory() adds an item to _inventory[]
   def addToInventory(self, item):
     self._inventory.append(item)
@@ -68,6 +83,17 @@ class room:
         # remove the item from the list
         del self._inventory[i]
   
+  # setInspect() sets the description of an item that can be inspected
+  def setInspect(self,item,description):
+    self._inspect[item] = description
+
+  # getInspect() returns the description of an item that can be inspected
+  def getInspect(self,item):
+    if item in self._inspect:
+      return self._inspect[item]
+    else:
+      return "That is nothing of interest."
+
   # setExit() adds an entry in _exits by it's direction
   # direction is a string, room should be another room object
   def setExit(self, direction, room):
