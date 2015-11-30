@@ -116,17 +116,19 @@ def mainFunc():
                       
   # Plaque in Prisoner's Cell; inspecting prompts the player to solve a riddle
   def riddle():
+    printNow("The plaque reads: 'It has a white light at the end of it and can be over in the blink of an eye. If you have seen " + \
+                        "our secret, you know its value. What do I speak of?")
     riddleGuess = requestString("Speak the answer to the riddle: ")
     if riddleGuess == None:
+      printNow(">> Unsure, you step away from the plaque.")
       return
     elif riddleGuess.upper() == "LIFE":
-      printNow( "Here's the passwordddddddddddddddd. password1234")
-      return "Here's the passwordddddddddddddddd. password1234"
+      printNow(">> You speak confidently: 'LIFE'")
+      printNow("You are suddenly certain that the phrase 'password1234' is important.")
     else:
-      printNow ("That is incorrect. Come back when you are ready to try again.")
-      return "Nothing happens."
-  roomRiddle.setInspect("PLAQUE", "The plaque reads: 'It has a white light at the end of it and can be over in the blink of an eye. If you have seen " + \
-                        "our secret, you know its value. What do I speak of?'",riddle)     
+      printNow(">> You speak confidently: '" + riddleGuess.upper() + "'")
+      printNow ("Nothing happens. Your answer must have been incorrect.")
+  roomRiddle.setInspect("PLAQUE", "", riddle)     
   
   # Light in Chamber of Whispers; inspecting prompts the player to provide the password which will give player a key
   def password():
@@ -220,7 +222,9 @@ def mainFunc():
     # Handle INSPECT command
     elif (cmd == "INSPECT"):
       printNow(">> You inspect the " + args.lower() + ".")
-      printNow(currRoom.getInspect(args))
+      inspectDescription = currRoom.getInspect(args)
+      if inspectDescription != "":
+        printNow(inspectDescription)
       continue
     
     # Handle TAKE command
