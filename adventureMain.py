@@ -77,19 +77,22 @@ def mainFunc():
                       "so perhaps you should inspect the light further.")
                   
   # Victory Room
-  roomVictory = room("Exit", "After placing the key in the lock, the door seems to have taken a hold of it on its own. It?s as if it has been " + \
-                     "waiting for this moment for an eternity, like a hungry animal that has been given a scrap of food. You hear several clicks " + \
-                     "and slowly the door creeps open. A light so bright you have to shield your eyes consumes to blood red glow of the room. " + \
-                     "Within a couple of seconds you can see clearly and walk up long stair case where an open field greets you at the top." +\
-                     " You feel the warmth of the afternoon sun of you face and realize you have made it out alive.")
+  roomVictoryBaseDescription = "After placing the key in the lock, the door seems to have taken a hold of it on its own. It's as if it has been " + \
+                     "waiting for this moment for an eternity, like a hungry animal that has been given a scrap of food."
+  roomVictory = room("Exit", roomVictoryBaseDescription + "Speaking of hungry animals, it seems the bear in the next room has awoken. You are not " + \
+                     "able to get the door open before the ravenous bear is upon you.")
     
   #--- --- --- --- --- --- Add Inspectable Items --- --- --- --- --- --- ---
-  # Bear in Guardian's Quarters; inspecting will kill the bear if the player has a knife, creating an East door
+  # Bear in Guardian's Quarters; inspecting will kill the bear if the player has a knife, creating an East door; also updates victory text
   def bearDoor():
     if prot.searchInventory(1) == true :
       roomBear.setExit("EAST", roomRiddle)
       roomBear.setDescription(roomBearBaseDescription + " To the East, there is the carcass of a bear near a door. " + \
                               "To the North you spot a small opening.")
+      roomVictory.setDescription(roomVictoryBaseDescription + " You hear several clicks and slowly the door creeps open. A light so bright " + \
+                                 "you have to shield your eyes consumes to blood red glow of the room. Within a couple of seconds you can see " + \
+                                 "clearly and walk up long stair case where an open field greets you at the top. You feel the warmth of the " + \
+                                 "afternoon sun of you face and realize you have made it out alive.")
       roomBear.setInspect("BEAR","The bear is quite dead.")
   roomBear.setInspect("BEAR","A bear sleeps in front of a door and you cannot go through without disturbing it. You need something to kill it.", bearDoor)
     
@@ -120,13 +123,13 @@ def mainFunc():
     printNow("The plaque reads: 'It has a white light at the end of it and can be over in the blink of an eye. If you have seen " + \
                         "our secret, you know its value. What do I speak of?")
     riddleGuess = requestString("Speak the answer to the riddle: ")
-    if riddleGuess == None:
+    if riddleGuess == None: # Cancel
       printNow(">> Unsure, you step away from the plaque.")
       return
-    elif riddleGuess.upper() == "LIFE":
+    elif riddleGuess.upper() == "LIFE": # Correct answer
       printNow(">> You speak confidently: 'LIFE'")
       printNow("You are suddenly certain that the phrase 'password1234' is important.")
-    else:
+    else: # Incorrect answer
       printNow(">> You speak confidently: '" + riddleGuess.upper() + "'")
       printNow ("Nothing happens. Your answer must have been incorrect.")
   roomRiddle.setInspect("PLAQUE", "", riddle)     
@@ -136,13 +139,13 @@ def mainFunc():
     printNow("Suddenly, hundreds of voices begin to talk all at the same time. Through the commotion you cannot make out what they are saying. " + \
              "Just before it goes silent you hear a whisper: 'Give us the password to receive our treasure...'")
     passwordGuess = requestString("State the password:")
-    if passwordGuess == None:
+    if passwordGuess == None: # Cancel
       printNow(">> Unsure, you back away slowly.")
-    elif passwordGuess == "password1234":
+    elif passwordGuess == "password1234": # Correct answer
       prot.addToInventory(itemKey)
       printNow(">> You speak confidently: '" + passwordGuess + "'")
       printNow( "A key suddenly appears in your pocket.")
-    else:
+    else: # Incorrect answer
       printNow(">> You speak confidently: '" + passwordGuess + "'")
       printNow ("The voices shriek: 'Leave us and return when you know the password!'")
   roomPassword.setInspect("LIGHT", "", password)  
@@ -186,8 +189,10 @@ def mainFunc():
   while(victoryFlag == false):
     
     # Set victory flag and break if the player is in the victory room
-    if (currRoom.getName() == roomVictory.getName()):
-      victoryFlag = true
+    if (currRoom.getName() == roomVictory.getName() and prot.searchInventory(2) == True):
+      # Only win if the bear isn't alive still
+      if roomBear.getExit("EAST") != False:
+        victoryFlag = True
       break
     # Break if the player is in the secret room
     elif (currRoom.getName() == roomSecret.getName()):
@@ -263,7 +268,7 @@ def mainFunc():
       continue
   
   #Declares victory or loss upon exit from the while loop.
-  if (victoryFlag== true):
+  if (victoryFlag == true):
     printNow("Way to go!")
   else:
     printNow("You are a disgrace to adventurers everywhere!\nThis dungeon is saddened by your patheticness!")
