@@ -2,8 +2,10 @@
 # Team 7: Cloud 6 Tech
 # CST 205
 
-setLibPath("D:\\Heather\\Documents\\School\\CSIT\\2015 Fall B - CST 205\\word-adventure-game")
+#setLibPath("C:\\Users\\julie\\Desktop\\word-adventure-game")
+#setLibPath("D:\\Heather\\Documents\\School\\CSIT\\2015 Fall B - CST 205\\word-adventure-game")
 #setLibPath("C:\\Users\\masonm\\CST205\\word_game\\word-adventure-game")
+
 from inputParser import *
 from item import *
 from player import *
@@ -207,6 +209,15 @@ def mainFunc():
       # Invalid direction/no room in that direction
       if (nextRoom == false):
         printNow("That's not a valid direction.")
+        printNow("However, you may go in these directions:")
+        if (currRoom.getExit("NORTH")!= false):
+          printNow("You may head North")
+        if (currRoom.getExit("EAST")!= false):
+          printNow("You may head East")
+        if (currRoom.getExit("SOUTH")!= false):
+          printNow("You may head South")
+        if (currRoom.getExit("WEST")!= false):
+          printNow("You may head West")  
         continue
       # Victory room is locked
       elif (nextRoom.getName() == roomVictory.getName() and prot.searchInventory(2) == false):
@@ -245,7 +256,17 @@ def mainFunc():
       else:
         printNow("You can't take that.")
       continue
-     
+    
+    elif (cmd == "DIRECTIONS"):
+      printNow("You may go in these directions:")
+      if (currRoom.getExit("NORTH")!= false):
+        printNow("You may head North")
+      if (currRoom.getExit("EAST")!= false):
+        printNow("You may head East")
+      if (currRoom.getExit("SOUTH")!= false):
+        printNow("You may head South")
+      if (currRoom.getExit("WEST")!= false):
+        printNow("You may head West")  
     # Handle EXIT and HELP requests
     elif (cmd == "MENU"):
       if (args == "EXIT"):

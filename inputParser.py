@@ -69,7 +69,12 @@ def getUserInput():
           # Reprompt with error message if no item argument is given
           promptMessage = "I do not know what you want to " + command.lower() + ".\n>"
           continue
-        
+
+      # Check for valid DIRECTIONS input; allow the full word or just one letter
+      elif command == "DIRECTIONS" or command == "D":
+        command = "DIRECTIONS"
+        args = "DIRECTIONS"
+		  
       # Handle other invalid input with error-message reprompt
       else:
         promptMessage = "I do not understand that.\n>"
