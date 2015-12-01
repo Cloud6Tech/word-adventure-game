@@ -2,8 +2,8 @@
 # Team 7: Cloud 6 Tech
 # CST 205
 
-setLibPath("C:\\Users\\Bretterbear\\Documents\\GitHub\\word-adventure-game")
-#setLibPath("D:\\Heather\\Documents\\School\\CSIT\\2015 Fall B - CST 205\\word-adventure-game")
+#setLibPath("C:\\Users\\Bretterbear\\Documents\\GitHub\\word-adventure-game")
+setLibPath("D:\\Heather\\Documents\\School\\CSIT\\2015 Fall B - CST 205\\word-adventure-game")
 #setLibPath("C:\\Users\\masonm\\CST205\\word_game\\word-adventure-game")
 
 from inputParser import *
@@ -16,8 +16,8 @@ def mainFunc():
   #--- --- --- --- --- --- Instantiating Player --- --- --- --- --- ---
   prot = player("prot")
   
+  
   #--- --- --- --- --- --- Instantiating Items --- --- --- --- --- ---
-  #Knife may be removed from final build
   itemKnife = item(1,"Knife", "A long jagged knife stained with blood from previous uses!")
   itemKey = item(2,"Key","A key which glows bright red.\nIt might fit that lock in the main room!")
 
@@ -36,7 +36,7 @@ def mainFunc():
                  "the cause of the thumping sound is liquid dripping on to the lamp. You reach and touch the lamp only to " + \
                  "increased your own dread; the lamp is soaked in blood. With your heart pounding you take swift look around and " + \
                  "notice there are three doors, all leading in opposite directions. Which door do you choose to open first: " + \
-                 "North, East, or West?") 
+                 "north, east, or west?") 
   
   # Secret Room
   roomSecret = room("The Pit", "You have found some sort of a hidden room behind the painting; hope begins to build that this could " + \
@@ -49,9 +49,9 @@ def mainFunc():
   roomKnifeBaseDescription = "You immediately notice the warmth of a fire upon your skin as you walk through the door's threshold. " + \
                    "You begin to feel yourself naturally relax as a result of the fire. This quickly dissipates as you take a look around " + \
                    "to see the room is decorated with devices that could serve no other purpose than torture. Directly across from you to " + \
-                   "the West, next to the fire, is a single table lined with assorted tools. Looking to North you notice yet another " + \
+                   "the west, next to the fire, is a single table lined with assorted tools. Looking to the north you notice yet another " + \
                    "door, meaning a continuation to the nightmare."
-  roomKnife = room("Torture Chamber", roomKnifeBaseDescription + " To the South nothing immediately catches your eye; however, after a " + \
+  roomKnife = room("Torture Chamber", roomKnifeBaseDescription + " To the south nothing immediately catches your eye; however, after a " + \
                    "second look you can't help but notice an elaborate painting of a lovely woman dancing under a pale moon's light.")
                     
   # Developer Credits Room
@@ -62,9 +62,9 @@ def mainFunc():
   # Bear Room
   roomBearBaseDescription = "Natural light seems for fill this room and you hope this is your exit. You follow the light to find the source is " + \
                             "an opening high in the ceiling, but you see no way to climb up to it."
-  roomBear = room("Guardian's Quarters",roomBearBaseDescription + " Directly across from you to the East, you see a door which " + \
+  roomBear = room("Guardian's Quarters",roomBearBaseDescription + " Directly across from you to the east, you see a door which " + \
                   "appears to be blocked by a monstrous bear. To your relief the animal is asleep, but you will need some sort of weapon to get " + \
-                  "past. To the North you spot a small opening which may contain an answer.")  
+                  "past. To the north you spot a small opening which may contain an answer.")  
   
   # Riddle Room
   roomRiddle = room("Prisoner's Cell", "You enter what appears to be a forgotten room. Old spider webs fill the dark crevices and thick carpet of dust " + \
@@ -81,22 +81,23 @@ def mainFunc():
   # Victory Room
   roomVictoryBaseDescription = "After placing the key in the lock, the door seems to have taken a hold of it on its own. It's as if it has been " + \
                      "waiting for this moment for an eternity, like a hungry animal that has been given a scrap of food."
-  roomVictory = room("Exit", roomVictoryBaseDescription + "Speaking of hungry animals, it seems the bear in the next room has awoken. You are not " + \
+  roomVictory = room("Exit", roomVictoryBaseDescription + " Speaking of hungry animals, it seems the bear in the next room has awoken. You are not " + \
                      "able to get the door open before the ravenous bear is upon you.")
+    
     
   #--- --- --- --- --- --- Add Inspectable Items --- --- --- --- --- --- ---
   # Bear in Guardian's Quarters; inspecting will kill the bear if the player has a knife, creating an East door; also updates victory text
   def bearDoor():
     if prot.searchInventory(1) == true :
       roomBear.setExit("EAST", roomRiddle)
-      roomBear.setDescription(roomBearBaseDescription + " To the East, there is the carcass of a bear near a door. " + \
-                              "To the North you spot a small opening.")
+      roomBear.setDescription(roomBearBaseDescription + " To the east, there is the carcass of a bear near a door. " + \
+                              "To the north you spot a small opening.")
       roomVictory.setDescription(roomVictoryBaseDescription + " You hear several clicks and slowly the door creeps open. A light so bright " + \
                                  "you have to shield your eyes consumes to blood red glow of the room. Within a couple of seconds you can see " + \
                                  "clearly and walk up long stair case where an open field greets you at the top. You feel the warmth of the " + \
                                  "afternoon sun on your face and realize you have made it out alive.")
       roomBear.setInspect("BEAR","The bear is quite dead.")
-  roomBear.setInspect("BEAR","A bear sleeps in front of a door and you cannot go through without disturbing it. You need something to kill it.", bearDoor)
+  roomBear.setInspect("BEAR","The bear sleeps in front of a door and you cannot go through without disturbing it. You need something to kill it.", bearDoor)
     
   # Knife on table in Torture Room; inspecting gives the player a knife and changes the bear interaction
   def tableKnife():
@@ -109,7 +110,7 @@ def mainFunc():
   # Painting on wall of Torture Chamber; inspecting creates a South door
   def paintingDoor():
     roomKnife.setExit("SOUTH", roomSecret)
-    roomKnife.setDescription(roomKnifeBaseDescription + " To the South, behind an elaborate painting of a lovely woman dancing under a pale moon's light, " + \
+    roomKnife.setDescription(roomKnifeBaseDescription + " To the south, behind an elaborate painting of a lovely woman dancing under a pale moon's light, " + \
                              "there is another door.")
   roomKnife.setInspect("PAINTING","Upon closer examination you see that the painting is wavering ever so slightly. You step a bit closer " + \
                       " and feel a cool breeze and the smell of fresh air. You've found a door hidden behind the painting.",paintingDoor)
@@ -152,90 +153,109 @@ def mainFunc():
       printNow ("The voices shriek: 'Leave us and return when you know the password!'")
   roomPassword.setInspect("LIGHT", "", password)  
   
+  
   #--- --- --- --- --- --- Add Initial Exits --- --- --- --- --- ---
+  # Empty Room
   roomEntrance.setExit("NORTH", roomChamber)
   
+  # Inner Chamber
   roomChamber.setExit("EAST", roomBear)
   roomChamber.setExit("SOUTH", roomEntrance)
   roomChamber.setExit("WEST", roomKnife)
   roomChamber.setExit("NORTH", roomVictory)
   
+  # Torture Chamber
   roomKnife.setExit("NORTH", roomCredits)
   roomKnife.setExit("EAST", roomChamber)
   
+  # Developer's Shrine
   roomCredits.setExit("SOUTH", roomKnife)
   
+  # Guardian's Quarters
   roomBear.setExit("WEST", roomChamber)
   roomBear.setExit("NORTH", roomPassword)
   
+  # Chamber of Whispers
   roomPassword.setExit("SOUTH",roomBear)
-    
+  
+  # Prisoner's Cell
   roomRiddle.setExit("WEST", roomBear)
   
-  #--- --- --- --- --- --- Add Map Print --- --- --- --- ---
-  #gets list of room names
+  
+  #--- --- --- --- --- --- Add Map Print Function --- --- --- --- ---
+  # Get list of room names
   roomList = [roomEntrance.getName(), roomKnife.getName(),roomChamber.getName(),roomBear.getName(), roomRiddle.getName(),
               roomCredits.getName(), roomVictory.getName(),roomPassword.getName()]
   #set flags for rooms visited
   roomFlags = [false, false, false, false, false, false, false, false]  
   
-  # prints map of dungen [_] indicates visited room [X] indicates current location
+  # Print map of dungeon; [_] indicates visited room, [X] indicates current location
   def printMap():
-    #map lines with northern most point at level three
+    # Map lines with northern-most point at level three
     levelOne = ""
     levelTwo = ""
     levelThree = ""
-    #loop through flags list setting lines to print for all levels
+    # Loop through flags list, setting lines to print for all levels
     for key in range(0, len(roomFlags)):
-      # level one is southern most point and signle room set specal case 
+      # Level one is southern-most point and single room set (special case) 
       if key in range(0,1):
-        if currentRoom == roomList[key]:
+        if currRoom.getName() == roomList[key]:
           levelOne = "    [X]"
         elif roomFlags[key] == true:
           levelOne = "    [_]"
-      #level two comprised of middle rooms
+      # Level two is comprised of middle rooms
       elif key in range(1, 5):
-        if currentRoom == roomList[key]:
+        if currRoom.getName() == roomList[key]:
           levelTwo += "[X]"
         elif roomFlags[key] == true:
           levelTwo += "[_]"
         else:
           levelTwo += "    "
-      #level three is comprised of northern most rooms
+      # Level three is comprised of northern-most rooms
       elif key in range(5,len(roomFlags)):
-         if currentRoom == roomList[key]:
+         if currRoom.getName() == roomList[key]:
            levelThree += "[X]"
          elif roomFlags[key] == true:
            levelThree += "[_]"
          else:
            levelThree += "    "
-    #prints map by line with northern most point at level three
-    printNow("===== MAP =====\n" + levelThree+"\n"+levelTwo+"\n"+levelOne)    
+    # Print map by line with northern-most point at level three
+    printNow("----- MAP -----\n" + levelThree+"\n"+levelTwo+"\n"+levelOne)    
+  
+  
+  #--- --- --- --- --- --- Add Directions Function --- --- --- --- ---
+  def getDirections():
+    directionString = "You may move in these directions: "
+    if (currRoom.getExit("NORTH")!= false):
+      directionString = directionString + "[NORTH]  "
+    if (currRoom.getExit("EAST")!= false):
+      directionString = directionString + "[EAST]  "
+    if (currRoom.getExit("SOUTH")!= false):
+      directionString = directionString + "[SOUTH]  "
+    if (currRoom.getExit("WEST")!= false):
+      directionString = directionString + "[WEST]  "
+    return directionString
+  
+  
   #--- --- --- --- --- --- Main Code Segment --- --- --- --- --- ---
-  #Starting Description
-  lineSeparator = "========================\n"
+  # Global variable initialization
+  victoryFlag = false # This flag will be flipped when player reaches victory room
+  currRoom = roomEntrance # currRoom contains current location of player character
+  
+  # Print starting Description
+  lineSeparator = "===============================================\n"
   printNow("You awaken from a dream you cannot remember in an unfamiliar setting. As you wait for your eyes to " + \
            "adjust you can't help but notice the pungent sent of decay lingering in the air. You immediately begin " + \
            "to feel a chill running down your spine as the realization hits that you may be part of some sinister game.")
   printNow("(type HELP if you have any questions)\n")
   printNow(lineSeparator)
   printNow("Current Location: " + roomEntrance.getName())
+  printMap()
   printNow(roomEntrance.getDescription())
- 
- #global variable initialization
-  victoryFlag = false #This flag will be flipped when player reaches victory room
-  currRoom = roomEntrance #currRoom contains current location of player character
   
-  #Main loop of program. Will continue to play until the player dies, exits, or reaches victory room
+  # Main game loop; will loop until the player dies, exits, or reaches victory room
   while(victoryFlag == false):
-    # used to set current room for map
-    currentRoom = currRoom.getName()
-    #set flags for rooms visited
-    for i in range(0,len(roomList)):
-      if currentRoom == roomList[i]:
-        roomFlags[i] = true
-    #prints new map after every move
-    printMap()
+
     # Set victory flag and break if the player is in the victory room
     if (currRoom.getName() == roomVictory.getName() and prot.searchInventory(2) == True):
       # Only win if the bear isn't alive still
@@ -254,27 +274,25 @@ def mainFunc():
       nextRoom = currRoom.getExit(args)
       # Invalid direction/no room in that direction
       if (nextRoom == false):
-        printNow("That's not a valid direction.")
-        printNow("However, you may go in these directions:")
-        if (currRoom.getExit("NORTH")!= false):
-          printNow("You may head North")
-        if (currRoom.getExit("EAST")!= false):
-          printNow("You may head East")
-        if (currRoom.getExit("SOUTH")!= false):
-          printNow("You may head South")
-        if (currRoom.getExit("WEST")!= false):
-          printNow("You may head West")  
+        printNow("That's not a valid direction. " + getDirections())
         continue
       # Victory room is locked
       elif (nextRoom.getName() == roomVictory.getName() and prot.searchInventory(2) == false):
         printNow("You don't have the key for that door.")
         continue
-      # Change room, print new description
+      # Change room, update map and print new description
       else:
+        # Set flag for room visited
+        for i in range(0,len(roomList)):
+          if currRoom.getName() == roomList[i]:
+            roomFlags[i] = true
+      
+        # Print description and map
         printNow(">> You boldly move " + args.lower() + " into the next room.")
         printNow(lineSeparator)
         currRoom = nextRoom
         printNow("Current Location: " + currRoom.getName())
+        printMap()
         printNow(currRoom.getDescription())
         continue
     
@@ -303,39 +321,34 @@ def mainFunc():
         printNow("You can't take that.")
       continue
     
+    # Handle DIRECTIONS command
     elif (cmd == "DIRECTIONS"):
-      printNow("You may go in these directions:")
-      if (currRoom.getExit("NORTH")!= false):
-        printNow("You may head North")
-      if (currRoom.getExit("EAST")!= false):
-        printNow("You may head East")
-      if (currRoom.getExit("SOUTH")!= false):
-        printNow("You may head South")
-      if (currRoom.getExit("WEST")!= false):
-        printNow("You may head West")  
+      printNow(getDirections())
+    
     # Handle EXIT and HELP requests
     elif (cmd == "MENU"):
       if (args == "EXIT"):
-        printNow("A Grue sneaks up from behind and eats you.")
+        printNow("\nA grue sneaks up from behind and eats you.")
         break
       elif (args == "HELP"):
-
         printNow("\n# Commands:")
         printNow("# MOVE: Lets you move in the cardinal directions. Must be followed by north, south, east or west. Usage: 'move <direction>'")
         printNow("# INSPECT: Take a closer look at an item. Usage: 'inspect <item>'")
+        printNow("# DIRECTIONS: Get a list of room exits. Usage: 'directions'")
         #printNow("# LOOK: Take a closer look in a direction. Usage: 'look <direction>'")
         #printNow("# TAKE: Take an item into your inventory. Usage: 'take <item>'")
         #printNow("# USE: Use an item in your inventory. Usage: 'use <item>'")
         printNow("# EXIT: Give up and end your adventure prematurely. Usage: 'exit'")
         #printNow("# HELP: Bring up this lovely menu. Usage: You really should know this one by now!")
         printNow("\n")
-
+    
+    # Handle anything else
     else:
       printNow("That's not a valid command.")
       continue
   
-  #Declares victory or loss upon exit from the while loop.
-  if (victoryFlag == true):
+  # Declare victory or loss upon exit from the game loop.
+  if (victoryFlag == true): # Win
     printNow("Way to go!")
-  else:
+  else:                     # Loss
     printNow("You are a disgrace to adventurers everywhere!\nThis dungeon is saddened by your patheticness!")
