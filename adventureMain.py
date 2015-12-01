@@ -296,11 +296,11 @@ def mainFunc():
         printNow(currRoom.getDescription())
         continue
     
-    # Handle LOOK command
-    elif (cmd == "LOOK"):    
-      printNow(">> You look to the " + args.lower() + ".")
-      printNow(currRoom.getLook(args))
-      continue
+    # Handle LOOK command (currently disabled)
+    #elif (cmd == "LOOK"):    
+      #printNow(">> You look to the " + args.lower() + ".")
+      #printNow(currRoom.getLook(args))
+      #continue
       
     # Handle INSPECT command
     elif (cmd == "INSPECT"):
