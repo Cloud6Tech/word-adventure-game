@@ -2,7 +2,7 @@
 # Team 7: Cloud 6 Tech
 # CST 205
 
-#setLibPath("C:\\Users\\julie\\Desktop\\word-adventure-game")
+setLibPath("C:\\Users\\Bretterbear\\Documents\\GitHub\\word-adventure-game")
 #setLibPath("D:\\Heather\\Documents\\School\\CSIT\\2015 Fall B - CST 205\\word-adventure-game")
 #setLibPath("C:\\Users\\masonm\\CST205\\word_game\\word-adventure-game")
 
@@ -94,7 +94,7 @@ def mainFunc():
       roomVictory.setDescription(roomVictoryBaseDescription + " You hear several clicks and slowly the door creeps open. A light so bright " + \
                                  "you have to shield your eyes consumes to blood red glow of the room. Within a couple of seconds you can see " + \
                                  "clearly and walk up long stair case where an open field greets you at the top. You feel the warmth of the " + \
-                                 "afternoon sun of you face and realize you have made it out alive.")
+                                 "afternoon sun on your face and realize you have made it out alive.")
       roomBear.setInspect("BEAR","The bear is quite dead.")
   roomBear.setInspect("BEAR","A bear sleeps in front of a door and you cannot go through without disturbing it. You need something to kill it.", bearDoor)
     
@@ -172,6 +172,45 @@ def mainFunc():
     
   roomRiddle.setExit("WEST", roomBear)
   
+  #--- --- --- --- --- --- Add Map Print --- --- --- --- ---
+  #gets list of room names
+  roomList = [roomEntrance.getName(), roomKnife.getName(),roomChamber.getName(),roomBear.getName(), roomRiddle.getName(),
+              roomCredits.getName(), roomVictory.getName(),roomPassword.getName()]
+  #set flags for rooms visited
+  roomFlags = [false, false, false, false, false, false, false, false]  
+  
+  # prints map of dungen [_] indicates visited room [X] indicates current location
+  def printMap():
+    #map lines with northern most point at level three
+    levelOne = ""
+    levelTwo = ""
+    levelThree = ""
+    #loop through flags list setting lines to print for all levels
+    for key in range(0, len(roomFlags)):
+      # level one is southern most point and signle room set specal case 
+      if key in range(0,1):
+        if currentRoom == roomList[key]:
+          levelOne = "    [X]"
+        elif roomFlags[key] == true:
+          levelOne = "    [_]"
+      #level two comprised of middle rooms
+      elif key in range(1, 5):
+        if currentRoom == roomList[key]:
+          levelTwo += "[X]"
+        elif roomFlags[key] == true:
+          levelTwo += "[_]"
+        else:
+          levelTwo += "    "
+      #level three is comprised of northern most rooms
+      elif key in range(5,len(roomFlags)):
+         if currentRoom == roomList[key]:
+           levelThree += "[X]"
+         elif roomFlags[key] == true:
+           levelThree += "[_]"
+         else:
+           levelThree += "    "
+    #prints map by line with northern most point at level three
+    printNow("===== MAP =====\n" + levelThree+"\n"+levelTwo+"\n"+levelOne)    
   #--- --- --- --- --- --- Main Code Segment --- --- --- --- --- ---
   #Starting Description
   lineSeparator = "========================\n"
@@ -189,7 +228,14 @@ def mainFunc():
   
   #Main loop of program. Will continue to play until the player dies, exits, or reaches victory room
   while(victoryFlag == false):
-    
+    # used to set current room for map
+    currentRoom = currRoom.getName()
+    #set flags for rooms visited
+    for i in range(0,len(roomList)):
+      if currentRoom == roomList[i]:
+        roomFlags[i] = true
+    #prints new map after every move
+    printMap()
     # Set victory flag and break if the player is in the victory room
     if (currRoom.getName() == roomVictory.getName() and prot.searchInventory(2) == True):
       # Only win if the bear isn't alive still
