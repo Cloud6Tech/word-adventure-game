@@ -3,7 +3,7 @@
 # CST 205
 
 #setLibPath("C:\\Users\\Bretterbear\\Documents\\GitHub\\word-adventure-game")
-setLibPath("D:\\Heather\\Documents\\School\\CSIT\\2015 Fall B - CST 205\\word-adventure-game")
+#setLibPath("D:\\Heather\\Documents\\School\\CSIT\\2015 Fall B - CST 205\\word-adventure-game")
 #setLibPath("C:\\Users\\masonm\\CST205\\word_game\\word-adventure-game")
 
 from inputParser import *
@@ -14,7 +14,7 @@ from room import *
 
 def mainFunc():
   #--- --- --- --- --- --- Instantiating Player --- --- --- --- --- ---
-  prot = player("prot")
+  prot = player(requestString("Please enter your character name."))
   
   
   #--- --- --- --- --- --- Instantiating Items --- --- --- --- --- ---
@@ -348,7 +348,7 @@ def mainFunc():
       continue
   
   # Declare victory or loss upon exit from the game loop.
-  if (victoryFlag == true): # Win
-    printNow("Way to go!")
-  else:                     # Loss
-    printNow("You are a disgrace to adventurers everywhere!\nThis dungeon is saddened by your patheticness!")
+  if (victoryFlag == true): #win
+    showInformation("Way to go, %s!" %prot.getName())
+  else: #loss
+    showInformation("%s, you are a disgrace to adventurers everywhere!\nThis dungeon is saddened by your patheticness!" %prot.getName())
